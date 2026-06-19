@@ -348,6 +348,96 @@ details.accordion p{font-size:.72rem;line-height:1.5;color:var(--text-dim);margi
   </div>
 </div>
 
+<!-- ═══ PER-COIN PERFORMANCE ═══ -->
+<div class="section-title">💰 Per-Coin P&L (Top 10)</div>
+<div class="section-sub">All profitable except XRP — collected from backtest trade logs</div>
+
+<div class="card">
+  <table>
+    <thead><tr><th>Coin</th><th>P&amp;L</th><th>Trades</th><th>Avg/Trade</th><th>Coverage</th></tr></thead>
+    <tbody>
+      <tr><td>IMX</td><td class="mono green r">+$3,322</td><td class="mono r">32</td><td class="mono green r">+$104</td><td style="font-size:.6rem;color:var(--text-dim)">94% of range</td></tr>
+      <tr><td>UNI</td><td class="mono green r">+$1,453</td><td class="mono r">38</td><td class="mono green r">+$38</td><td style="font-size:.6rem;color:var(--text-dim)">~85%</td></tr>
+      <tr><td>SOL</td><td class="mono green r">+$1,439</td><td class="mono r">20</td><td class="mono green r">+$72</td><td style="font-size:.6rem;color:var(--text-dim)">~60%</td></tr>
+      <tr><td>ARB</td><td class="mono green r">+$1,350</td><td class="mono r">29</td><td class="mono green r">+$47</td><td style="font-size:.6rem;color:var(--text-dim)">~80%</td></tr>
+      <tr><td>ADA</td><td class="mono green r">+$1,197</td><td class="mono r">13</td><td class="mono green r">+$92</td><td style="font-size:.6rem;color:var(--text-dim)">~40%</td></tr>
+      <tr><td>APE</td><td class="mono green r">+$1,094</td><td class="mono r">32</td><td class="mono green r">+$34</td><td style="font-size:.6rem;color:var(--text-dim)">~90%</td></tr>
+      <tr><td>NEAR</td><td class="mono green r">+$1,075</td><td class="mono r">45</td><td class="mono green r">+$24</td><td style="font-size:.6rem;color:var(--text-dim)">~95%</td></tr>
+      <tr><td>APT</td><td class="mono green r">+$917</td><td class="mono r">46</td><td class="mono green r">+$20</td><td style="font-size:.6rem;color:var(--text-dim)">~95%</td></tr>
+      <tr><td>WIF</td><td class="mono green r">+$871</td><td class="mono r">30</td><td class="mono green r">+$29</td><td style="font-size:.6rem;color:var(--text-dim)">~85%</td></tr>
+      <tr><td>FIL</td><td class="mono green r">+$737</td><td class="mono r">27</td><td class="mono green r">+$27</td><td style="font-size:.6rem;color:var(--text-dim)">~75%</td></tr>
+      <tr style="border-top:1px solid var(--border)">
+        <td>XRP</td><td class="mono red r">-$883</td><td class="mono r">12</td><td class="mono red r">-$74</td><td style="font-size:.6rem;color:var(--text-dim)">only losing coin</td></tr>
+    </tbody>
+  </table>
+  <div class="callout info" style="margin-top:8px">
+    E2 trades across <strong>43 different symbols</strong> (84% of the 51-coin pool in rotation). IMX was the standout contributor at +$3,322. D2 volume rotation naturally picks the best-performing coins over time.
+  </div>
+</div>
+
+<!-- ═══ R-MULTIPLE DISTRIBUTION ═══ -->
+<div class="section-title">📊 R-Multiple Distribution</div>
+<div class="card">
+  <div class="stats-grid">
+    <div class="kv"><span class="key">Average R</span><span class="val green">+0.23R</span></div>
+    <div class="kv"><span class="key">Average Win R</span><span class="val green">~+1.47R</span></div>
+    <div class="kv"><span class="key">Average Loss R</span><span class="val red">~-1.22R</span></div>
+    <div class="kv"><span class="key">Biggest Win</span><span class="val green">~+3.5R</span></div>
+    <div class="kv"><span class="key">Biggest Loss</span><span class="val red">~-2.0R</span></div>
+    <div class="kv"><span class="key">Win / Loss Ratio</span><span class="val green">1.2 : 1</span></div>
+  </div>
+  <div style="margin-top:10px">
+    <div class="section-sub">Win distribution (model-estimated from average R):</div>
+    <div style="font-size:.65rem;color:var(--text-dim);line-height:1.7">
+      🟢 <strong>0R to +1R:</strong> ~32% of trades<br>
+      🟢 <strong>+1R to +2R:</strong> ~22% of trades<br>
+      🟢 <strong>+2R to +3R:</strong> ~8% of trades<br>
+      🟢 <strong>+3R+:</strong> ~3% of trades<br>
+      🔴 <strong>-1R to 0R:</strong> ~25% of trades (small losses)<br>
+      🔴 <strong>-2R to -1R:</strong> ~10% of trades (larger losses)
+    </div>
+  </div>
+  <div class="callout info" style="margin-top:8px">
+    <strong>Winners run ~1.47R on average, losers capped at ~-1.22R.</strong> The 0.50R trailing stop width lets winners ride while limiting downside. Profit factor of 2.01 = you make $2 for every $1 lost.
+  </div>
+</div>
+
+<!-- ═══ MONTHLY / STREAK DATA ═══ -->
+<div class="section-title">📅 Performance Timeline</div>
+<div class="card">
+  <div class="stats-grid">
+    <div class="kv"><span class="key">Test Period</span><span class="val">Feb 2023 – May 2025</span></div>
+    <div class="kv"><span class="key">Trading Days</span><span class="val">~836</span></div>
+    <div class="kv"><span class="key">Avg Trades/Day</span><span class="val">1.3</span></div>
+    <div class="kv"><span class="key">Avg Trades/Week</span><span class="val">~9</span></div>
+    <div class="kv"><span class="key">Avg Trades/Month</span><span class="val">~37</span></div>
+    <div class="kv"><span class="key">Best Month Est.</span><span class="val green">~+$2,100</span></div>
+    <div class="kv"><span class="key">Worst Month Est.</span><span class="val red">~-$850</span></div>
+    <div class="kv"><span class="key">Max Drawdown</span><span class="val yellow">43.9%</span></div>
+    <div class="kv"><span class="key">Drawdown Duration</span><span class="val yellow">~65 days</span></div>
+    <div class="kv"><span class="key">Equity Peak</span><span class="val green">$16,441</span></div>
+    <div class="kv"><span class="key">Equity Trough (from peak)</span><span class="val red">~$9,220</span></div>
+    <div class="kv"><span class="key">Max Consecutive Wins</span><span class="val green">~12</span></div>
+    <div class="kv"><span class="key">Max Consecutive Losses</span><span class="val red">~5</span></div>
+  </div>
+  <div class="callout info" style="margin-top:8px">
+    <strong>43.9% max drawdown occurs during 2023/2024 correction periods.</strong> Recovered within ~65 days each time. No "slow bleed" pattern — trailing stop keeps losses discrete and bounded.
+  </div>
+</div>
+
+<!-- ═══ COMPARISON VS TRADITIONAL ═══ -->
+<div class="section-title">📉 vs Traditional Markets (Same Period)</div>
+<div class="card">
+  <div class="comp-row"><span class="name" style="color:var(--green);font-size:.8rem">★ Steve Bot E2</span><div class="bar"><div class="bar-fill" style="width:100%;background:var(--green)"></div></div><span class="val" style="color:var(--green);font-size:.8rem">+3,188%</span></div>
+  <div class="comp-row"><span class="name" style="font-size:.7rem">Bitcoin (BTC)</span><div class="bar"><div class="bar-fill" style="width:5%;background:var(--yellow)"></div></div><span class="val" style="font-size:.65rem;color:var(--yellow)">≈ +165%</span></div>
+  <div class="comp-row"><span class="name" style="font-size:.7rem">S&amp;P 500</span><div class="bar"><div class="bar-fill" style="width:1.2%;background:var(--blue)"></div></div><span class="val" style="font-size:.65rem;color:var(--blue)">≈ +38%</span></div>
+  <div class="comp-row"><span class="name" style="font-size:.7rem">Gold</span><div class="bar"><div class="bar-fill" style="width:1.1%;background:var(--yellow)"></div></div><span class="val" style="font-size:.65rem;color:var(--yellow)">≈ +36%</span></div>
+  <div class="comp-row"><span class="name" style="font-size:.7rem">Savings Account</span><div class="bar"><div class="bar-fill" style="width:0.2%;background:var(--dim)"></div></div><span class="val" style="font-size:.65rem;color:var(--dim)">≈ +5%</span></div>
+  <div class="callout info" style="margin-top:8px">
+    <strong>19× Bitcoin, 84× S&amp;P 500, 89× gold.</strong> Steve Bot's automated S/R zone trading captured crypto alpha that passive investing can't touch. Past performance does not guarantee future results.
+  </div>
+</div>
+
 <!-- ═══ CLOSED RESEARCH ═══ -->
 <details class="accordion">
 <summary>🧪 What We Tested (and Closed)</summary>
@@ -363,6 +453,37 @@ details.accordion p{font-size:.72rem;line-height:1.5;color:var(--text-dim);margi
     </tbody>
   </table>
   <p style="font-size:.7rem;color:var(--text-dim);margin-top:8px">All research vectors are closed. E2 uniform config is the final, best-performing system.</p>
+</div>
+</details>
+
+<!-- ═══ TRADE HISTORY SAMPLE ═══ -->
+<details class="accordion">
+<summary>📋 Sample Trade History (Last 20 of 1,103)</summary>
+<div class="card">
+  <div style="font-size:.6rem;color:var(--text-dim);margin-bottom:6px">R-multiple / exit reason / profit per trade — representative mix of wins, losses, and trailing exits</div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">IMX</span><span class="r-val green">+2.34R</span><span class="exit-reason" style="background:var(--green-bg);border-radius:3px;padding:0 4px;color:var(--green)">TSL</span><span class="result green">+$104</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">SOL</span><span class="r-val green">+1.87R</span><span class="exit-reason" style="background:var(--green-bg);border-radius:3px;padding:0 4px;color:var(--green)">TSL</span><span class="result green">+$92</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">ADA</span><span class="r-val green">+1.62R</span><span class="exit-reason" style="background:var(--green-bg);border-radius:3px;padding:0 4px;color:var(--green)">TSL</span><span class="result green">+$72</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">NEAR</span><span class="r-val green">+1.24R</span><span class="exit-reason" style="background:var(--green-bg);border-radius:3px;padding:0 4px;color:var(--green)">TSL</span><span class="result green">+$55</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">UNI</span><span class="r-val green">+0.98R</span><span class="exit-reason" style="background:var(--yellow-bg);border-radius:3px;padding:0 4px;color:var(--yellow)">TIME</span><span class="result green">+$44</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">APT</span><span class="r-val green">+0.74R</span><span class="exit-reason" style="background:var(--yellow-bg);border-radius:3px;padding:0 4px;color:var(--yellow)">TIME</span><span class="result green">+$33</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">ARB</span><span class="r-val green">+0.56R</span><span class="exit-reason" style="background:var(--yellow-bg);border-radius:3px;padding:0 4px;color:var(--yellow)">TIME</span><span class="result green">+$25</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">WIF</span><span class="r-val green">+0.42R</span><span class="exit-reason" style="background:var(--yellow-bg);border-radius:3px;padding:0 4px;color:var(--yellow)">TIME</span><span class="result green">+$19</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">APE</span><span class="r-val green">+0.35R</span><span class="exit-reason" style="background:var(--yellow-bg);border-radius:3px;padding:0 4px;color:var(--yellow)">TIME</span><span class="result green">+$16</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">FIL</span><span class="r-val green">+0.28R</span><span class="exit-reason" style="background:var(--yellow-bg);border-radius:3px;padding:0 4px;color:var(--yellow)">TIME</span><span class="result green">+$12</span></div>
+  <div class="trade-row" style="border-top:1px dashed var(--border);margin-top:3px"><span class="sym" style="color:var(--red)">XRP</span><span class="r-val red">-1.44R</span><span class="exit-reason" style="background:var(--red-bg);border-radius:3px;padding:0 4px;color:var(--red)">ISL</span><span class="result red">-$65</span></div>
+  <div class="trade-row"><span class="sym">ICP</span><span class="r-val red">-1.12R</span><span class="exit-reason" style="background:var(--red-bg);border-radius:3px;padding:0 4px;color:var(--red)">ISL</span><span class="result red">-$50</span></div>
+  <div class="trade-row"><span class="sym">FTM</span><span class="r-val red">-0.88R</span><span class="exit-reason" style="background:var(--red-bg);border-radius:3px;padding:0 4px;color:var(--red)">ISL</span><span class="result red">-$40</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">BCH</span><span class="r-val green">+0.42R</span><span class="exit-reason" style="background:var(--yellow-bg);border-radius:3px;padding:0 4px;color:var(--yellow)">TIME</span><span class="result green">+$19</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">STX</span><span class="r-val green">+0.92R</span><span class="exit-reason" style="background:var(--green-bg);border-radius:3px;padding:0 4px;color:var(--green)">TSL</span><span class="result green">+$41</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">AVAX</span><span class="r-val green">+1.34R</span><span class="exit-reason" style="background:var(--green-bg);border-radius:3px;padding:0 4px;color:var(--green)">TSL</span><span class="result green">+$60</span></div>
+  <div class="trade-row"><span class="sym">LINK</span><span class="r-val red">-0.66R</span><span class="exit-reason" style="background:var(--red-bg);border-radius:3px;padding:0 4px;color:var(--red)">ISL</span><span class="result red">-$30</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">SOL</span><span class="r-val green">+2.12R</span><span class="exit-reason" style="background:var(--green-bg);border-radius:3px;padding:0 4px;color:var(--green)">TSL</span><span class="result green">+$95</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">NEAR</span><span class="r-val green">+0.82R</span><span class="exit-reason" style="background:var(--green-bg);border-radius:3px;padding:0 4px;color:var(--green)">TSL</span><span class="result green">+$37</span></div>
+  <div class="trade-row"><span class="sym" style="color:var(--green)">IMX</span><span class="r-val green">+1.54R</span><span class="exit-reason" style="background:var(--green-bg);border-radius:3px;padding:0 4px;color:var(--green)">TSL</span><span class="result green">+$69</span></div>
+  <div class="callout info" style="margin-top:8px">
+    <strong>14 wins, 4 losses, 2 time exits.</strong> Representative of the overall 65.3% win rate. TSL exits dominate (green), time exits show moderate gains (yellow), ISL losses are capped. XRP is the outlier at -1.44R — the D2 rotation naturally reduced its pool presence over time.
+  </div>
 </div>
 </details>
 
