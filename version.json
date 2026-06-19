@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "min_config_version": "1.0.0",
+  "changelog": "🚀 Initial release — Steve Bot V1.0\n\nE2/D2 trading system:\n- 51-coin structural pool with top-35 D2 volume rotation\n- Zone bounce LONG entries with adaptive trailing stop\n- Telegram commands: /status, /positions, /pnl, /history\n- Paper mode by default — say \"go live\" to trade real\n\nSee setup guide: https://stevebot-updates.pages.dev/",
+  "download_url": "https://stevebot-updates.pages.dev/install.sh",
+  "compatible_models": ["deepseek/deepseek-chat", "deepseek/deepseek-v4-pro"],
+  "required_binaries": {
+    "stevebot": "1.0.0"
+  }
+}

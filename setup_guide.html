@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>🚀 Steve Bot V1.0 — Setup Guide</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root {
+  --bg: #010216;
+  --bg2: #070b24;
+  --card: #0c112e;
+  --card-hover: #121842;
+  --border: #1a2050;
+  --border-glow: #2a3070;
+  --text: #e0e4f0;
+  --text-dim: #5a6690;
+  --green: #2ee659;
+  --green-bg: rgba(46,230,89,0.08);
+  --green-border: rgba(46,230,89,0.25);
+  --red: #ff5c5c;
+  --yellow: #f5b748;
+  --blue: #3a7bfd;
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Inter, sans-serif;
+  --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', monospace;
+  --radius: 12px;
+}
+html{font-size:16px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);padding:12px;min-height:100vh;overflow-x:hidden}
+.container{max-width:560px;margin:0 auto;padding-bottom:40px}
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Header */
+.header{display:flex;flex-direction:column;align-items:center;padding:8px 0 4px;gap:8px}
+.header .logo{width:140px;height:140px;border-radius:16px;display:block;margin:0 auto;border:1px solid var(--border)}
+.header h1{font-size:1.1rem;font-weight:700;text-align:center;color:var(--green)}
+.header .subtitle{font-size:.7rem;color:var(--text-dim);text-align:center;letter-spacing:.3px}
+.header .badge{background:var(--green-bg);border:1px solid var(--green-border);border-radius:20px;padding:4px 14px;font-size:.65rem;color:var(--green);font-weight:600;margin-top:4px}
+
+/* Steps */
+.step{margin-bottom:14px}
+.step-header{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--green);color:#000;font-size:.75rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-num.dim{background:var(--bg2);border:1px solid var(--border);color:var(--text-dim)}
+.step-title{font-size:.85rem;font-weight:700;color:var(--text)}
+.step-time{font-size:.6rem;color:var(--text-dim);margin-left:auto;white-space:nowrap}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin:0 0 4px 0}
+.card-inset{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin:8px 0}
+.card .label{font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);font-weight:600;margin-bottom:4px}
+.card p{font-size:.78rem;line-height:1.5;color:var(--text);margin-bottom:6px}
+.card p:last-child{margin-bottom:0}
+
+/* Code blocks */
+.code-block{background:#000;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin:8px 0;font-family:var(--font-mono);font-size:.72rem;color:var(--green);overflow-x:auto;white-space:pre-wrap;word-break:break-word;line-height:1.5;user-select:all}
+.code-inline{background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-family:var(--font-mono);font-size:.7rem;color:var(--green);white-space:nowrap}
+
+/* Buttons */
+.btn{display:inline-block;background:var(--green);color:#000;border:none;border-radius:8px;padding:8px 16px;font-size:.75rem;font-weight:700;cursor:default}
+.btn-sm{display:inline-block;background:var(--green);color:#000;border:none;border-radius:4px;padding:4px 10px;font-size:.65rem;font-weight:700}
+.warning{background:rgba(255,92,92,0.1);border:1px solid rgba(255,92,92,0.25);border-radius:8px;padding:10px 12px;margin:8px 0}
+.warning .label{color:var(--red);font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:3px}
+.warning p{color:#ffb0b0;font-size:.75rem;line-height:1.4}
+.tip{background:rgba(58,123,253,0.1);border:1px solid rgba(58,123,253,0.2);border-radius:8px;padding:10px 12px;margin:8px 0}
+.tip .label{color:var(--blue);font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:3px}
+.tip p{color:#b0c4ff;font-size:.75rem;line-height:1.4}
+.success{background:var(--green-bg);border:1px solid var(--green-border);border-radius:8px;padding:10px 12px;margin:8px 0}
+.success .label{color:var(--green);font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:3px}
+.success p{color:var(--green);font-size:.75rem;line-height:1.4}
+
+/* Lists */
+ul,ol{padding-left:18px;margin:6px 0}
+li{font-size:.78rem;line-height:1.5;color:var(--text);margin-bottom:4px}
+li strong{color:var(--text)}
+
+/* Key-value pairs */
+.kv{display:flex;justify-content:space-between;padding:3px 0;font-size:.72rem;border-bottom:1px solid rgba(26,32,80,0.4)}
+.kv:last-child{border-bottom:none}
+.kv .key{color:var(--text-dim)}
+.kv .val{color:var(--green);font-family:var(--font-mono);font-size:.7rem;text-align:right;max-width:60%;overflow:hidden;text-overflow:ellipsis}
+
+/* Divider */
+.divider{height:1px;background:var(--border);margin:16px 0}
+
+/* Footer */
+.footer{text-align:center;padding:16px 0 8px;font-size:.65rem;color:var(--text-dim);border-top:1px solid var(--border);margin-top:20px}
+.footer .emoji{font-size:.85rem;display:block;margin-bottom:4px}
+
+/* Accordion */
+.accordion summary{font-size:.78rem;font-weight:600;color:var(--text-dim);cursor:default;padding:6px 0}
+.accordion[open] summary{color:var(--text);margin-bottom:6px}
+.accordion p{font-size:.72rem;line-height:1.5;color:var(--text-dim);margin-bottom:4px}
+
+/* Progress indicator */
+.progress{display:flex;gap:4px;margin:10px 0}
+.progress .dot{width:10px;height:10px;border-radius:50%;background:var(--bg2);border:1px solid var(--border)}
+.progress .dot.active{background:var(--green);border-color:var(--green);box-shadow:0 0 6px var(--green)}
+.progress .dot.done{background:var(--green-border);border-color:var(--green)}
+
+/* Inline image */
+.inline-icon{width:16px;height:16px;vertical-align:middle;border-radius:3px}
+
+@media(max-width:400px){.header .logo{width:100px;height:100px}.step-header{flex-wrap:wrap}}
+
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <img class="logo" src="logo.jpg" alt="Steve Bot V1.0">
+  <h1>🚀 Steve Bot V1.0</h1>
+  <div class="subtitle">AI-Powered Trading Coordinator — Setup Guide</div>
+  <div class="badge">⚡ 10-15 min setup</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ STEP 1 ═══ -->
+<div class="step">
+<div class="step-header">
+  <div class="step-num">1</div>
+  <div class="step-title">Create your Oracle Cloud account</div>
+  <div class="step-time">~5 min</div>
+</div>
+<div class="card">
+  <p>Oracle Cloud gives you a free virtual machine that runs Steve Bot 24/7. No credit card charges — you're on the free tier.</p>
+  <ol>
+    <li>Open <strong><a href="https://cloud.oracle.com">cloud.oracle.com</a></strong> on your phone</li>
+    <li>Tap <strong>"Sign Up for Free Tier"</strong></li>
+    <li>Enter your email, create a password</li>
+    <li>They'll ask for a card to verify your identity — a small hold is placed and refunded. <strong>You won't be charged.</strong></li>
+    <li>Enter your phone number for SMS verification</li>
+  </ol>
+  <div class="tip">
+    <div class="label">📎 Keep this open</div>
+    <p>Leave Oracle Cloud logged in. The next step uses it.</p>
+  </div>
+</div>
+</div>
+
+<!-- ═══ STEP 2 ═══ -->
+<div class="step">
+<div class="step-header">
+  <div class="step-num">2</div>
+  <div class="step-title">Create your virtual machine</div>
+  <div class="step-time">~5 min</div>
+</div>
+<div class="card">
+  <p>This is the computer that Steve Bot lives on. Think of it as a rental server in Oracle's data centre.</p>
+  <ol>
+    <li>Tap the menu (☰) → <strong>"Compute" → "Instances"</strong></li>
+    <li>Tap <strong>"Create Instance"</strong></li>
+    <li>Name: <span class="code-inline">stevebot</span></li>
+    <li>Scroll to <strong>"Image and Shape"</strong> → tap <strong>"Change Shape"</strong></li>
+    <li>Select the <strong>"Ampere A1"</strong> tab → <strong>VM.Standard.A1.Flex</strong> with <strong>4 OCPU, 24 GB RAM</strong></li>
+    <li>Under <strong>"Add SSH Keys"</strong> → tap <strong>"Generate SSH Key Pair"</strong></li>
+    <li>Tap the <strong>"Save Private Key"</strong> and <strong>"Save Public Key"</strong> buttons</li>
+    <li>Tap <strong>"Create"</strong></li>
+    <li>Wait <strong>~2 minutes</strong> while your VM starts up</li>
+  </ol>
+  <div class="warning">
+    <div class="label">⚠️ Critical — Save Your Keys</div>
+    <p>The SSH private key is your only way to access the VM. If you lose it, you'll need to delete the VM and start over. Save it to your phone's Downloads.</p>
+  </div>
+</div>
+</div>
+
+<!-- ═══ STEP 3 ═══ -->
+<div class="step">
+<div class="step-header">
+  <div class="step-num">3</div>
+  <div class="step-title">Install an SSH app on your phone</div>
+  <div class="step-time">~1 min</div>
+</div>
+<div class="card">
+  <div class="kv"><span class="key">iPhone</span><span class="val">Termius (App Store, free)</span></div>
+  <div class="kv"><span class="key">Android</span><span class="val">Termius or JuiceSSH (Play Store, free)</span></div>
+  <p style="margin-top:6px">Install the app, then come back here.</p>
+</div>
+</div>
+
+<!-- ═══ STEP 4 ═══ -->
+<div class="step">
+<div class="step-header">
+  <div class="step-num">4</div>
+  <div class="step-title">Connect to your VM</div>
+  <div class="step-time">~2 min</div>
+</div>
+<div class="card">
+  <p>Open Termius (or your SSH app). You need two things from Oracle Cloud:</p>
+
+  <div class="card-inset">
+    <div class="kv"><span class="key">Host / IP</span><span class="val" id="ip-placeholder" style="color:var(--yellow)">(from Step 2)</span></div>
+    <div class="kv"><span class="key">Username</span><span class="val">ubuntu</span></div>
+    <div class="kv"><span class="key">Auth method</span><span class="val">SSH Key (import saved file)</span></div>
+  </div>
+
+  <ol>
+    <li>Open Termius → <strong>"New Host"</strong></li>
+    <li>Find your VM's <strong>Public IP Address</strong> under "Instance Details" in Oracle Cloud — it looks like <span class="code-inline">123.123.123.123</span></li>
+    <li>Enter that IP in the Host field</li>
+    <li>Username: <span class="code-inline">ubuntu</span></li>
+    <li>Under "SSH Key" → <strong>"Import Key"</strong> → select the private key file you downloaded from Oracle</li>
+    <li>Tap <strong>Connect</strong></li>
+  </ol>
+
+  <div class="success">
+    <div class="label">✅ You should see</div>
+    <p>A command prompt like <span class="code-inline">ubuntu@stevebot:~$</span> — this means you're connected!</p>
+  </div>
+
+  <div class="tip">
+    <div class="label">🔍 Can't find your IP?</div>
+    <p>In Oracle Cloud, go to Compute → Instances → tap your stevebot instance. The Public IP is at the top of the page.</p>
+  </div>
+</div>
+</div>
+
+<!-- ═══ INTERLUDE: GET YOUR API KEYS ═══ -->
+<div class="divider"></div>
+<div class="card" style="border-color:var(--border-glow);background:var(--bg2)">
+  <p style="text-align:center;font-size:.8rem;font-weight:600">🔑 Before We Run the Installer</p>
+  <p style="text-align:center;font-size:.7rem;color:var(--text-dim)">You need 3 API keys. Get them now — the wizard will ask for them in the next step.</p>
+</div>
+
+<!-- ═══ STEP 5a: DeepSeek ═══ -->
+<div class="step">
+<div class="step-header">
+  <div class="step-num">🔑</div>
+  <div class="step-title" style="color:var(--green)">DeepSeek API Key</div>
+  <div class="step-time">~2 min</div>
+</div>
+<div class="card">
+  <p>This is how you pay for Steve Bot's AI brain. Costs about <strong>$3-5/month</strong>.</p>
+  <ol>
+    <li>Open <strong><a href="https://platform.deepseek.com">platform.deepseek.com</a></strong></li>
+    <li>Sign up (email + password)</li>
+    <li>Tap <strong>"Top Up"</strong> → add <strong>$10</strong> (lasts 2-3 months)</li>
+    <li>Go to <strong>"API Keys"</strong> → <strong>"Create new key"</strong></li>
+    <li>Copy the key — it starts with <span class="code-inline">sk-</span></li>
+  </ol>
+  <div class="tip">
+    <div class="label">📌 Keep this tab open</div>
+    <p>You'll paste this key into the setup wizard in the next step.</p>
+  </div>
+</div>
+</div>
+
+<!-- ═══ STEP 5b: Bitget ═══ -->
+<div class="step">
+<div class="step-header">
+  <div class="step-num">🔑</div>
+  <div class="step-title" style="color:var(--yellow)">Bitget API Key</div>
+  <div class="step-time">~3 min</div>
+</div>
+<div class="card">
+  <p>Connects Steve Bot to your exchange account. <strong>Your funds stay safe.</strong></p>
+  <ol>
+    <li>Log into <strong><a href="https://www.bitget.com">bitget.com</a></strong> on your phone</li>
+    <li>Tap your profile icon → <strong>"API Keys"</strong> → <strong>"Create API Key"</strong></li>
+    <li>Name: <span class="code-inline">stevebot</span></li>
+    <li>Permissions: Enable only <strong>"Futures Trading"</strong></li>
+    <li>❌ <strong style="color:var(--red)">DO NOT</strong> enable "Withdraw"</li>
+    <li>Save the <strong>API Key</strong>, <strong>Secret Key</strong>, and <strong>Passphrase</strong></li>
+  </ol>
+  <div class="warning">
+    <div class="label">⚠️ Security</div>
+    <p>With no withdrawal permission, Steve Bot can trade but can <strong>never take your funds</strong>. Even if someone hacked the VM, your money stays on Bitget.</p>
+  </div>
+</div>
+</div>
+
+<!-- ═══ STEP 5c: Telegram ═══ -->
+<div class="step">
+<div class="step-header">
+  <div class="step-num">🔑</div>
+  <div class="step-title" style="color:var(--blue)">Telegram Bot Token</div>
+  <div class="step-time">~2 min</div>
+</div>
+<div class="card">
+  <p>This is how you talk to Steve Bot. You'll create a bot in Telegram and get a token.</p>
+  <ol>
+    <li>Open Telegram, search for <strong><a href="https://t.me/botfather">@BotFather</a></strong></li>
+    <li>Send <span class="code-inline">/newbot</span></li>
+    <li>Name: <span class="code-inline">Steve Bot</span></li>
+    <li>Username: pick something unique like <span class="code-inline">YourNameBot</span></li>
+    <li>BotFather replies with a token like <span class="code-inline">123456:ABCdef...</span></li>
+    <li><strong>Copy the token</strong></li>
+  </ol>
+
+  <div class="divider" style="margin:8px 0"></div>
+
+  <p style="font-weight:600;margin-bottom:4px">Also get your Chat ID:</p>
+  <ol>
+    <li>Search for <strong><a href="https://t.me/userinfobot">@userinfobot</a></strong></li>
+    <li>Send <span class="code-inline">/start</span></li>
+    <li>It replies with your Chat ID — a number like <span class="code-inline">123456789</span></li>
+    <li><strong>Copy the Chat ID</strong></li>
+  </ol>
+</div>
+</div>
+
+<!-- ═══ STEP 6: RUN INSTALLER ═══ -->
+<div class="step">
+<div class="step-header">
+  <div class="step-num">6</div>
+  <div class="step-title" style="color:var(--green)">Install Steve Bot</div>
+  <div class="step-time">~3 min</div>
+</div>
+<div class="card">
+  <p>Back in Termius (your VM), copy-paste this one command and press Enter:</p>
+
+  <div class="code-block" id="install-cmd">curl -sSL https://stevebot-updates.pages.dev/install.sh | bash</div>
+
+  <p>The installer will:</p>
+  <ul>
+    <li>Install Python, Node.js, and OpenClaw</li>
+    <li>Create the Steve Bot directory structure</li>
+    <li>Launch the interactive setup wizard</li>
+  </ul>
+
+  <div class="tip">
+    <div class="label">📌 How to paste in Termius</div>
+    <p>Tap once in the terminal → tap <strong>"Paste"</strong>. Or long-press → Paste.</p>
+  </div>
+</div>
+</div>
+
+<!-- ═══ STEP 7: WIZARD ═══ -->
+<div class="step">
+<div class="step-header">
+  <div class="step-num">7</div>
+  <div class="step-title">The Setup Wizard</div>
+  <div class="step-time">~2 min</div>
+</div>
+<div class="card">
+  <p>The wizard asks for 7 things. Just copy-paste each API key when asked. The wizard tests each one live.</p>
+
+  <div class="card-inset">
+    <div class="kv"><span class="key">1. Your Name</span><span class="val">"Ross"</span></div>
+    <div class="kv"><span class="key">2. DeepSeek API Key</span><span class="val">sk-... (pastes hidden)</span></div>
+    <div class="kv"><span class="key">3. Bitget API Key</span><span class="val">bg_...</span></div>
+    <div class="kv"><span class="key">4. Bitget Secret</span><span class="val">(pastes hidden)</span></div>
+    <div class="kv"><span class="key">5. Bitget Passphrase</span><span class="val">(pastes hidden)</span></div>
+    <div class="kv"><span class="key">6. Telegram Bot Token</span><span class="val">123456:ABC...</span></div>
+    <div class="kv"><span class="key">7. Your Chat ID</span><span class="val">123456789</span></div>
+  </div>
+
+  <p>Each key is tested immediately. If something's wrong, the wizard tells you and lets you retry.</p>
+
+  <div class="success">
+    <div class="label">✅ After the wizard finishes</div>
+    <p>Steve Bot starts automatically. Open Telegram and send <span class="code-inline">/start</span></p>
+  </div>
+</div>
+</div>
+
+<!-- ═══ DONE ═══ -->
+<div class="divider"></div>
+<div class="card" style="border-color:var(--green-border);background:var(--green-bg);text-align:center">
+  <p style="font-size:1.1rem;font-weight:700;color:var(--green);margin-bottom:4px">✅ You're Done!</p>
+  <p style="font-size:.78rem;color:var(--green);opacity:0.8">Steve Bot is running. Open Telegram and say hello.</p>
+  <div style="margin-top:10px;font-size:.7rem;color:var(--text-dim)">He'll respond with "🦈 Morning, Champ!"</div>
+</div>
+
+<!-- ═══ AFTER SETUP ═══ -->
+<div class="divider"></div>
+<div class="card">
+  <p style="font-weight:700;font-size:.8rem;margin-bottom:8px">📱 Steve Bot Commands</p>
+  <div class="kv"><span class="key"><span class="code-inline">/status</span></span><span class="val" style="color:var(--text)">Balance &amp; positions</span></div>
+  <div class="kv"><span class="key"><span class="code-inline">/positions</span></span><span class="val" style="color:var(--text)">Open trades</span></div>
+  <div class="kv"><span class="key"><span class="code-inline">/pnl</span></span><span class="val" style="color:var(--text)">Weekly performance</span></div>
+  <div class="kv"><span class="key"><span class="code-inline">/history</span></span><span class="val" style="color:var(--text)">Last 10 trades</span></div>
+  <div class="kv"><span class="key"><span class="code-inline">/help</span></span><span class="val" style="color:var(--text)">All commands</span></div>
+  <div class="kv"><span class="key"><span class="code-inline">"go live"</span></span><span class="val" style="color:var(--yellow)">Switch to real trading</span></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ COST BREAKDOWN ═══ -->
+<details class="accordion">
+<summary>💰 How much does this cost?</summary>
+<div class="card">
+  <div class="kv"><span class="key">Oracle Cloud VM</span><span class="val" style="color:var(--green)">$0/mo (free tier)</span></div>
+  <div class="kv"><span class="key">DeepSeek AI</span><span class="val" style="color:var(--green)">~$3-5/mo</span></div>
+  <div class="kv"><span class="key">Telegram Bot</span><span class="val" style="color:var(--green)">$0/mo</span></div>
+  <div class="kv"><span class="key">Cloudflare Pages</span><span class="val" style="color:var(--green)">$0/mo</span></div>
+  <div style="margin-top:8px;font-size:.72rem;color:var(--text-dim);text-align:center">Total: <strong style="color:var(--green)">~$3-5/month</strong></div>
+</div>
+</details>
+
+<!-- ═══ SECURITY FAQ ═══ -->
+<details class="accordion">
+<summary>🔒 Is this safe? (Security Questions)</summary>
+<div class="card">
+  <div class="kv"><span class="key">Can SB steal my money?</span><span class="val" style="color:var(--green)">No — no withdrawal permission</span></div>
+  <div class="kv"><span class="key">Can someone hack my VM?</span><span class="val" style="color:var(--green)">Firewall only allows SSH (you)</span></div>
+  <div class="kv"><span class="key">Does SB access anyone else?</span><span class="val" style="color:var(--green)">Only DeepSeek, Bitget, Telegram</span></div>
+  <div class="kv"><span class="key">Can I lose all my money?</span><span class="val" style="color:var(--yellow)">Yes — trading has risk</span></div>
+  <div style="margin-top:8px;font-size:.7rem;color:var(--text-dim);text-align:center">Steve Bot starts in <strong>paper trading</strong> mode. Think "flight simulator." You explicitly say "go live" to use real money.</div>
+</div>
+</details>
+
+<!-- ═══ TROUBLESHOOTING ═══ -->
+<details class="accordion">
+<summary>❓ Something not working?</summary>
+<div class="card">
+  <div class="kv"><span class="key">Termius can't connect</span><span class="val" style="color:var(--text)">Check IP is correct. VM may still be starting.</span></div>
+  <div class="kv"><span class="key">Wizard says "invalid key"</span><span class="val" style="color:var(--text)">Re-check the key. Only enable "Futures Trading" on Bitget.</span></div>
+  <div class="kv"><span class="key">Steve Bot not replying</span><span class="val" style="color:var(--text)">Send /start once. Check Token &amp; Chat ID are correct.</span></div>
+  <div class="kv"><span class="key">Need help?</span><span class="val" style="color:var(--blue)">Ask Ross — he built this.</span></div>
+</div>
+</details>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  <span class="emoji">🦈</span>
+  Steve Bot V1.0 — Built with ❤️ for family &amp; friends<br>
+  All systems in paper mode. Trade at your own risk.
+</div>
+
+</div>
+</body>
+</html>
