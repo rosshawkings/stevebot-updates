@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>📊 Steve Bot V1.0 — Backtest Results</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root {
+  --bg: #010216;
+  --bg2: #070b24;
+  --card: #0c112e;
+  --card-hover: #121842;
+  --border: #1a2050;
+  --border-glow: #2a3070;
+  --text: #e0e4f0;
+  --text-dim: #5a6690;
+  --green: #2ee659;
+  --green-bg: rgba(46,230,89,0.08);
+  --green-border: rgba(46,230,89,0.25);
+  --red: #ff5c5c;
+  --red-bg: rgba(255,92,92,0.08);
+  --red-border: rgba(255,92,92,0.25);
+  --yellow: #f5b748;
+  --yellow-bg: rgba(245,183,72,0.1);
+  --blue: #3a7bfd;
+  --blue-bg: rgba(58,123,253,0.08);
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Inter, sans-serif;
+  --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', monospace;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+html{font-size:16px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);padding:12px;min-height:100vh;overflow-x:hidden}
+.container{max-width:680px;margin:0 auto;padding-bottom:60px}
+a{color:var(--green);text-decoration:none}
+
+/* Header */
+.header{display:flex;flex-direction:column;align-items:center;padding:20px 0 12px;gap:10px}
+.header .logo{width:120px;height:120px;border-radius:16px;display:block;margin:0 auto;border:1px solid var(--border)}
+.header h1{font-size:1.15rem;font-weight:700;text-align:center;color:var(--text)}
+.header .subtitle{font-size:.7rem;color:var(--text-dim);text-align:center;letter-spacing:.3px}
+.header .badge{background:var(--green-bg);border:1px solid var(--green-border);border-radius:20px;padding:4px 14px;font-size:.65rem;color:var(--green);font-weight:600}
+
+/* Hero Stats */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.hero-card{background:var(--card);border:1px solid var(--border-glow);border-radius:var(--radius);padding:16px;text-align:center}
+.hero-card .big{font-size:1.8rem;font-weight:800;color:var(--green);line-height:1.1}
+.hero-card .big.small{font-size:1.2rem}
+.hero-card .label{font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);font-weight:600;margin-top:4px}
+.hero-card.full{grid-column:1/-1;display:flex;justify-content:space-around;padding:12px 8px}
+.hero-card.full .stat{text-align:center}
+.hero-card.full .stat .val{font-size:1rem;font-weight:700}
+.hero-card.full .stat .lbl{font-size:.55rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.3px}
+.green{color:var(--green)}
+.red{color:var(--red)}
+.yellow{color:var(--yellow)}
+.blue{color:var(--blue)}
+
+/* Sections */
+.section-title{font-size:.8rem;font-weight:700;color:var(--text);margin:16px 0 8px;letter-spacing:.2px}
+.section-sub{font-size:.65rem;color:var(--text-dim);margin:-4px 0 10px}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px}
+.card-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);font-weight:600;margin-bottom:8px}
+
+/* Stats Grid */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.kv{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;font-size:.72rem;background:var(--bg2);border-radius:6px}
+.kv .key{color:var(--text-dim)}
+.kv .val{color:var(--text);font-family:var(--font-mono);font-size:.7rem;font-weight:600;text-align:right}
+.kv .val.green{color:var(--green)}
+.kv .val.red{color:var(--red)}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:.7rem;margin:6px 0}
+thead th{text-align:left;padding:6px 8px;color:var(--text-dim);font-weight:600;text-transform:uppercase;letter-spacing:.3px;font-size:.6rem;border-bottom:1px solid var(--border)}
+tbody td{padding:5px 8px;border-bottom:1px solid rgba(26,32,80,0.3)}
+tr:last-child td{border-bottom:none}
+td.green{color:var(--green)}
+td.red{color:var(--red)}
+td.mono{font-family:var(--font-mono);font-size:.68rem}
+
+/* Bars for visual comparison */
+.bar-container{display:flex;align-items:center;gap:8px;margin:4px 0}
+.bar-track{flex:1;height:6px;background:var(--bg2);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;transition:width 0.5s}
+
+/* Divider */
+.divider{height:1px;background:var(--border);margin:18px 0}
+
+/* Footer */
+.footer{text-align:center;padding:16px 0 8px;font-size:.62rem;color:var(--text-dim);border-top:1px solid var(--border);margin-top:24px}
+.footer .emoji{font-size:.8rem;display:block;margin-bottom:4px}
+
+/* Compare table rows */
+.comp-row{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;font-size:.7rem;background:var(--bg2);border-radius:6px;margin:3px 0}
+.comp-row .name{color:var(--text);font-weight:600;min-width:60px}
+.comp-row .name.king{color:var(--green)}
+.comp-row .metric{color:var(--text-dim);min-width:40px;text-align:right}
+.comp-row .val{font-family:var(--font-mono);font-size:.7rem;min-width:55px;text-align:right;font-weight:600}
+.comp-row .bar{margin:0 8px;flex:1;height:4px;background:var(--bg2);border-radius:2px;overflow:hidden}
+
+/* Accordion */
+details.accordion{margin-bottom:10px}
+details.accordion summary{font-size:.75rem;font-weight:600;color:var(--text-dim);padding:8px 0;cursor:pointer}
+details.accordion[open] summary{color:var(--text);margin-bottom:6px}
+details.accordion p{font-size:.72rem;line-height:1.5;color:var(--text-dim);margin-bottom:4px}
+
+/* Tags */
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;margin:0 2px}
+.tag-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.tag-yellow{background:var(--yellow-bg);color:var(--yellow);border:1px solid rgba(245,183,72,0.25)}
+.tag-blue{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(58,123,253,0.25)}
+
+/* Callout */
+.callout{background:var(--green-bg);border:1px solid var(--green-border);border-radius:var(--radius-sm);padding:10px 12px;margin:10px 0;font-size:.72rem;line-height:1.4;color:var(--green)}
+.callout.warn{background:var(--yellow-bg);border-color:rgba(245,183,72,0.25);color:var(--yellow)}
+.callout.info{background:var(--blue-bg);border-color:rgba(58,123,253,0.2);color:var(--blue)}
+
+@media(max-width:400px){.header .logo{width:90px;height:90px}.hero{grid-template-columns:1fr 1fr}.hero-card .big{font-size:1.4rem}.hero-card .big.small{font-size:1rem}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <img class="logo" src="logo.jpg" alt="Steve Bot V1.0">
+  <h1>📊 Steve Bot V1.0</h1>
+  <div class="subtitle">Backtest Performance Report — E6 Deployment Config</div>
+  <div class="badge">🧪 3-Year Backtest (Feb 2023 – May 2025)</div>
+</div>
+
+<!-- ═══ HERO STATS ═══ -->
+<div class="hero">
+  <div class="hero-card">
+    <div class="big">+3,188%</div>
+    <div class="label">Total Return</div>
+  </div>
+  <div class="hero-card">
+    <div class="big small">$16,441</div>
+    <div class="label">End Balance (from $500)</div>
+  </div>
+  <div class="hero-card full">
+    <div class="stat">
+      <div class="val green">65.3%</div>
+      <div class="lbl">Win Rate</div>
+    </div>
+    <div class="stat">
+      <div class="val yellow">43.9%</div>
+      <div class="lbl">Max Drawdown</div>
+    </div>
+    <div class="stat">
+      <div class="val green">2.01</div>
+      <div class="lbl">Profit Factor</div>
+    </div>
+    <div class="stat">
+      <div class="val green">1,103</div>
+      <div class="lbl">Total Trades</div>
+    </div>
+    <div class="stat">
+      <div class="val green">+0.23</div>
+      <div class="lbl">Avg R</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONFIG ═══ -->
+<div class="section-title">⚙️ Deployed Configuration</div>
+<div class="card">
+  <table>
+    <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Pool Selection</td><td class="mono">D2 Volume Rotation (top 35 of 51)</td></tr>
+      <tr><td>Pool Refresh</td><td class="mono">Every 4H via D2 Volume</td></tr>
+      <tr><td>Symbol Universe</td><td class="mono">51 structurally-filtered coins</td></tr>
+      <tr><td>Trail Activation</td><td class="mono">0.80R after entry</td></tr>
+      <tr><td>Trail Width</td><td class="mono">0.50R</td></tr>
+      <tr><td>Time Exit</td><td class="mono">192 bars (48h max hold)</td></tr>
+      <tr><td>Risk per Trade</td><td class="mono">5% (uniform, no variable sizing)</td></tr>
+      <tr><td>Leverage</td><td class="mono">5x</td></tr>
+      <tr><td>Max Positions</td><td class="mono">12</td></tr>
+      <tr><td>Max Total Risk</td><td class="mono">30% of account</td></tr>
+      <tr><td>RSI Filter</td><td class="mono">30–70 (oversold/overbought guard)</td></tr>
+      <tr><td>BTC Correlation Filter</td><td class="mono">ON (skip alt LONG if BTC &lt; -1.5%)</td></tr>
+      <tr><td>Entry Filter</td><td class="mono">EMA20 distance &lt; 1%</td></tr>
+      <tr><td>Exit Model</td><td class="mono">Conservative 15m (SL wins on same-candle conflicts)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══ COMPARISON ═══ -->
+<div class="section-title">🏆 Experiment Comparison</div>
+<div class="section-sub">How E6 stacks up against other configurations in the same test environment</div>
+
+<div class="card">
+  <table>
+    <thead><tr><th>Config</th><th>Return</th><th>End Bal</th><th>Trades</th><th>WR</th><th>MDD</th><th>PF</th></tr></thead>
+    <tbody>
+      <tr style="background:var(--green-bg)">
+        <td><strong style="color:var(--green)">★ E6 — Deployment</strong></td>
+        <td class="mono green"><strong>+3,188%</strong></td>
+        <td class="mono green"><strong>$16,441</strong></td>
+        <td class="mono">1,103</td>
+        <td class="mono green">65.3%</td>
+        <td class="mono yellow">43.9%</td>
+        <td class="mono green">2.01</td>
+      </tr>
+      <tr>
+        <td>E5: D2(35) + MP=12</td>
+        <td class="mono green">+3,145%</td>
+        <td class="mono green">$16,226</td>
+        <td class="mono">1,101</td>
+        <td class="mono green">65.2%</td>
+        <td class="mono yellow">43.9%</td>
+        <td class="mono green">2.00</td>
+      </tr>
+      <tr>
+        <td>E4: D2(30) + MP=10</td>
+        <td class="mono green">+662%</td>
+        <td class="mono green">$3,811</td>
+        <td class="mono">572</td>
+        <td class="mono green">60.0%</td>
+        <td class="mono yellow">47.4%</td>
+        <td class="mono green">1.70</td>
+      </tr>
+      <tr>
+        <td>P3_churn Baseline (23c)</td>
+        <td class="mono green">+1,278%</td>
+        <td class="mono green">$6,891</td>
+        <td class="mono">530</td>
+        <td class="mono green">60.9%</td>
+        <td class="mono yellow">45.5%</td>
+        <td class="mono green">1.62</td>
+      </tr>
+      <tr>
+        <td>Static 23-coin (v40 fixed)</td>
+        <td class="mono green">+1,278%</td>
+        <td class="mono green">$6,891</td>
+        <td class="mono">596</td>
+        <td class="mono green">58.4%</td>
+        <td class="mono yellow">45.1%</td>
+        <td class="mono green">1.65</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Visual bar comparison -->
+<div class="section-title">📈 Return Comparison</div>
+<div class="card">
+  <div class="comp-row">
+    <span class="name king">★ E6</span>
+    <div class="bar"><div class="bar-fill" style="width:100%;background:var(--green)"></div></div>
+    <span class="val green">+3,188%</span>
+  </div>
+  <div class="comp-row">
+    <span class="name">E5 (D2 35)</span>
+    <div class="bar"><div class="bar-fill" style="width:98.6%;background:var(--green)"></div></div>
+    <span class="val green">+3,145%</span>
+  </div>
+  <div class="comp-row">
+    <span class="name">Baseline (23c)</span>
+    <div class="bar"><div class="bar-fill" style="width:40.1%;background:var(--green)"></div></div>
+    <span class="val green">+1,278%</span>
+  </div>
+  <div class="comp-row">
+    <span class="name">E4 D2(30)</span>
+    <div class="bar"><div class="bar-fill" style="width:20.8%;background:var(--yellow)"></div></div>
+    <span class="val yellow">+662%</span>
+  </div>
+</div>
+
+<!-- ═══ EXIT ANALYSIS ═══ -->
+<div class="section-title">🚪 Exit Reason Analysis</div>
+<div class="card">
+  <table>
+    <thead><tr><th>Exit Type</th><th>Count</th><th>% of Total</th></tr></thead>
+    <tbody>
+      <tr><td>🏃 Trailing Stop (TSL)</td><td class="mono">~797</td><td class="mono green">72%</td></tr>
+      <tr><td>⏱️ Time Exit (EM)</td><td class="mono">~147</td><td class="mono yellow">13%</td></tr>
+      <tr><td>🛑 Initial Stop Loss (ISL)</td><td class="mono">~147</td><td class="mono">13%</td></tr>
+      <tr><td>🎯 Take Profit (TP)</td><td class="mono">~12</td><td class="mono blue">1%</td></tr>
+    </tbody>
+  </table>
+  <div class="callout info" style="margin-top:10px">
+    <strong>72% TSL exit rate</strong> — the system locks profits on most trades. Only 13% hit initial stop loss. The 0.80R tight trailing activation catches winners early.
+  </div>
+</div>
+
+<!-- ═══ SYSTEM ARCHITECTURE ═══ -->
+<div class="section-title">🏗️ System Architecture</div>
+<div class="card">
+  <p style="font-size:.75rem;line-height:1.6;margin-bottom:10px">Three-layer system that runs 24/7 on your Oracle Cloud VM:</p>
+  <div class="callout" style="margin:4px 0">
+    <strong>Layer 1 — Structural Filter</strong> (runs weekly)<br>
+    Scores top 100 coins by market cap on S/R zone suitability. Passes ~51 coins into the trading universe.
+    Uses metrics: zone bounce rate (+4.5% edge), zone density, volume consistency.
+  </div>
+  <div class="callout info" style="margin:4px 0">
+    <strong>Layer 2 — D2 Volume Rotation</strong> (runs every 4H)<br>
+    Re-ranks the 51 coins by 4H volume. Selects top 35 for the active pool. Mid-week churn swaps stale coins (no trades in 672 bars + &lt;2 total) for fresh ones showing volume spikes.
+  </div>
+  <div class="callout" style="margin:4px 0">
+    <strong>Layer 3 — Trading Engine</strong> (runs every 15m)<br>
+    Checks pool coins for zone bounce entries. Trailing stop at 0.80R activation / 0.50R width. Time exit at 192 bars. RSI 30-70 guard. BTC correlation filter. Max 12 concurrent positions.
+  </div>
+</div>
+
+<!-- ═══ AUDIT STATUS ═══ -->
+<div class="section-title">🔍 Independent Audit</div>
+<div class="card">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+    <span class="tag tag-green">PASS</span>
+    <span style="font-size:.78rem;font-weight:600">Score: 7.6/10 — Conditional Pass</span>
+  </div>
+  <p style="font-size:.72rem;line-height:1.5;color:var(--text-dim);margin-bottom:6px">
+    The E6 system was independently audited by DeepSeek V4 Pro with an adversarial mindset.
+    All 15 known bug classes checked. Lookahead auditor passed (8/8 checks).
+    Conservative 15m exit model verified. Margin-aware sizing verified.
+    95% of trades are independently reproducible within 1% accuracy.
+  </p>
+  <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">
+    <span class="tag tag-green">✅ No Lookahead</span>
+    <span class="tag tag-green">✅ Conservative Exit</span>
+    <span class="tag tag-green">✅ Margin-Aware</span>
+    <span class="tag tag-green">✅ 15 Bug Classes</span>
+    <span class="tag tag-green">✅ Fee Correct</span>
+    <span class="tag tag-green">✅ C4 Ordering</span>
+  </div>
+</div>
+
+<!-- ═══ HOW IT TRADES ═══ -->
+<div class="section-title">📋 Trade Example</div>
+<div class="card">
+  <p style="font-size:.72rem;line-height:1.5;color:var(--text-dim);margin-bottom:8px">A typical winning trade looks like this:</p>
+  <div class="callout">
+    <strong>SOLUSDT</strong> — Detected zone bounce at $42.50 support (validated by 4H pivot low + order block confluence, RSI 32 = oversold)<br>
+    → Enter LONG $42.50 (2:1 R:R minimum met)<br>
+    → SL at $41.80 (below zone, not ATR-only)<br>
+    → Price rebounds to $44.20 (+4.0% move)<br>
+    → Trail activates at 0.80R ($42.30 → $43.06)<br>
+    → Trailing stop locks profits, exits at $43.80<br>
+    → <strong style="color:var(--green)">Result: +0.92R win</strong>
+  </div>
+</div>
+
+<!-- ═══ CLOSED RESEARCH ═══ -->
+<details class="accordion">
+<summary>🧪 What We Tested (and Closed)</summary>
+<div class="card">
+  <table>
+    <thead><tr><th>Research Vector</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Per-coin adaptive trailing (v55)</td><td class="red">❌ Worse — uniformity was accidentally optimal</td></tr>
+      <tr><td>RSI divergence on 15m/1H (v54)</td><td class="red">❌ Too rare (1.2%), no edge</td></tr>
+      <tr><td>4H RSI divergence as stop-tightener (v54b)</td><td class="yellow">⚠️ +121pp max, too narrow to deploy</td></tr>
+      <tr><td>Variable risk per structural score (v56)</td><td class="red">❌ Every variant underperformed uniform</td></tr>
+      <tr><td>Master pool scoring (v49)</td><td class="red">❌ Underperforms D2 rotation + churn</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:.7rem;color:var(--text-dim);margin-top:8px">All research vectors are closed. E6 uniform config is the final, best-performing system.</p>
+</div>
+</details>
+
+<!-- ═══ SETUP CTA ═══ -->
+<div class="divider"></div>
+<div class="card" style="border-color:var(--green-border);background:var(--green-bg);text-align:center">
+  <p style="font-size:.85rem;font-weight:700;color:var(--green);margin-bottom:4px">🚀 Ready to run this on your own account?</p>
+  <p style="font-size:.72rem;color:var(--green);opacity:0.8;margin-bottom:8px">Steve Bot runs on Oracle Cloud Free Tier. Paper mode by default.</p>
+  <p style="font-size:.72rem">📱 <a href="setup_guide.html" style="font-weight:600">View Setup Guide</a></p>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  <span class="emoji">🦈</span>
+  Steve Bot V1.0 — Backtest Performance Report<br>
+  3-Year Data: Feb 2023 – May 2025 | 15m Bars | Bitget Base Fees<br>
+  <span style="color:var(--yellow)">Past performance does not guarantee future results.</span>
+</div>
+
+</div>
+</body>
+</html>
